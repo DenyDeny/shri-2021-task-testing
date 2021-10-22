@@ -8,7 +8,7 @@ import { Cart } from '../../src/client/pages/Cart'
 import { initStore, addToCart, clearCart } from '../../src/client/store';
 import { MockExampleApi, CartApi } from './mocks';
 
-describe('корзина', () => {
+describe('Корзина', () => {
     it("продукт добавляется в корзину", async () => {
         const basename = "/hw/store";
         const api = new MockExampleApi(basename);
@@ -93,5 +93,26 @@ describe('корзина', () => {
         const storage = cart.getState();
 
         expect(Object.keys(storage).length).toBe(0);
+    });
+
+    it('пустая корзина имеет ссылку на каталог', function () {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+
+        const store = initStore(api, cart);
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <Cart />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const link = container.querySelector('a');
+
+        expect(link.href).toBe(`${window.location.origin}/hw/store/catalog`);
     });
 })
