@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CartState, CheckoutFormData, CheckoutResponse, Product, ProductShortInfo } from '../common/types';
+import {CartState, CheckoutFormData, CheckoutResponse, Product, ProductShortInfo} from '../common/types';
 
 export class ExampleApi {
     constructor(private readonly basename: string) {
