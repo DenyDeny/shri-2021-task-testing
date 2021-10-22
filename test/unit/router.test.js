@@ -100,7 +100,7 @@ describe('Роутинг', () => {
             </Router>
         );
 
-        const { container } =  render(application);
+        const { container } = render(application);
         const contactsTitle = container.querySelector('h1');
         expect(contactsTitle.textContent).toBe('Contacts');
     });
