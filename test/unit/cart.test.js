@@ -88,12 +88,12 @@ describe('Корзина', () => {
             </BrowserRouter>
         );
 
-        render(application);
+        const { container } = render(application);
         const buttonSubmit = screen.getByRole('button', { name: /Clear shopping cart/i });
         await events.click(buttonSubmit)
-        const storage = cart.getState();
+        const table = container.querySelector('table');
 
-        expect(Object.keys(storage).length).toBe(0);
+        expect(table).toBe(null);
     });
 
     it('пустая корзина имеет ссылку на каталог', function () {
