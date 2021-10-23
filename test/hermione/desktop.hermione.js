@@ -31,7 +31,7 @@ describe('корзина', async function() {
 
         // Go to the cart
         await this.browser.url('/hw/store/cart');
-        // const stateBeforeReload = await this.browser.$('.Cart tbody tr');
+
         // Reload page
         await this.browser.url('https://google.ru/');
         await this.browser.url('/hw/store/cart');
@@ -41,8 +41,5 @@ describe('корзина', async function() {
                 compositeImage: true,
             });
         }, 5000, 'waiting 5s');
-        // const stateAfterReload = await this.browser.$('.Cart tbody tr');
-        //
-        // assert.equal(stateBeforeReload, stateAfterReload, 'состояние корзины не изменилось');
     });
 });
