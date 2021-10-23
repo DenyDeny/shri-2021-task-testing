@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { render, screen, within } from '@testing-library/react';
 import { it, expect, describe } from '@jest/globals';
 import events from '@testing-library/user-event';
+import { Application } from '../../src/client/Application';
 import { Cart } from '../../src/client/pages/Cart'
 import { initStore, addToCart, clearCart } from '../../src/client/store';
 import { MockExampleApi, CartApi } from './mocks';
@@ -216,5 +217,32 @@ describe('Каждый товар в корзине имеет', () => {
         const table = container.querySelector('table');
         const total = table.querySelector('.Cart-Total').textContent.replace(/[^+\d]/g, '');
         expect(Number(total)).toBe(product.data.price);
+    });
+
+    it('правильное отображение не повторяющихся айтемов в шапке', async function () {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+
+        const product = await api.getProductById(0);
+
+        const store = initStore(api, cart);
+
+        store.dispatch(addToCart(product.data));
+        store.dispatch(addToCart(product.data));
+        store.dispatch(addToCart(product.data));
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <Application />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const navLink = container.querySelector('.navbar-nav a[href="/hw/store/cart"]');
+        const countItems = Number(navLink.textContent.replace(/[^+\d]/g, ''));
+        expect(countItems).toBe(1);
     });
 })
