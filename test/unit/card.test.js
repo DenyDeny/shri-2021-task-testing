@@ -55,3 +55,137 @@ describe('карта товара', () => {
         expect(badge).toBeTruthy();
     });
 })
+
+describe('подробное описание товара', () => {
+    it("отображается название товара", async () => {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+        const store = initStore(api, cart);
+
+        const product = await api.getProductById(0);
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <ProductDetails product={product} />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const name = container.querySelector('h1');
+
+        expect(name.textContent).toContain(product.data.name);
+    });
+
+    it("отображается описание товара", async () => {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+        const store = initStore(api, cart);
+
+        const product = await api.getProductById(0);
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <ProductDetails product={product} />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const description = container.querySelector('.ProductDetails-Description');
+
+        expect(description.textContent).toContain(product.data.description);
+    });
+
+    it("отображается цена товара", async () => {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+        const store = initStore(api, cart);
+
+        const product = await api.getProductById(0);
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <ProductDetails product={product} />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const price = container.querySelector('.ProductDetails-Price');
+
+        expect(price.textContent).toContain(product.data.price);
+    });
+
+    it("отображается цвет товара", async () => {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+        const store = initStore(api, cart);
+
+        const product = await api.getProductById(0);
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <ProductDetails product={product} />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const color = container.querySelector('.ProductDetails-Color');
+
+        expect(color.textContent).toContain(product.data.color);
+    });
+
+    it("отображается материал товара", async () => {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+        const store = initStore(api, cart);
+
+        const product = await api.getProductById(0);
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <ProductDetails product={product} />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const material = container.querySelector('.ProductDetails-Material');
+
+        expect(material.textContent).toContain(product.data.material);
+    });
+
+    it("отображается кнопка добавить в корзину", async () => {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
+        const store = initStore(api, cart);
+
+        const product = await api.getProductById(0);
+
+        const application = (
+            <BrowserRouter basename={basename}>
+                <Provider store={store}>
+                    <ProductDetails product={product} />
+                </Provider>
+            </BrowserRouter>
+        );
+
+        const { container } = render(application);
+        const button = container.querySelector('.ProductDetails-AddToCart');
+
+        expect(button.textContent).toContain('Add to Cart');
+    });
+})
