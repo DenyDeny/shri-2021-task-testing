@@ -68,7 +68,7 @@ describe('подробное описание товара', () => {
         const application = (
             <BrowserRouter basename={basename}>
                 <Provider store={store}>
-                    <ProductDetails product={product} />
+                    <ProductDetails product={product.data} />
                 </Provider>
             </BrowserRouter>
         );
@@ -76,7 +76,7 @@ describe('подробное описание товара', () => {
         const { container } = render(application);
         const name = container.querySelector('h1');
 
-        expect(name.textContent).toContain(product.data.name);
+        expect(name.textContent).toBe(product.data.name);
     });
 
     it("отображается описание товара", async () => {
@@ -90,7 +90,7 @@ describe('подробное описание товара', () => {
         const application = (
             <BrowserRouter basename={basename}>
                 <Provider store={store}>
-                    <ProductDetails product={product} />
+                    <ProductDetails product={product.data} />
                 </Provider>
             </BrowserRouter>
         );
@@ -98,7 +98,7 @@ describe('подробное описание товара', () => {
         const { container } = render(application);
         const description = container.querySelector('.ProductDetails-Description');
 
-        expect(description.textContent).toContain(product.data.description);
+        expect(description.textContent).toBe(product.data.description);
     });
 
     it("отображается цена товара", async () => {
@@ -112,7 +112,7 @@ describe('подробное описание товара', () => {
         const application = (
             <BrowserRouter basename={basename}>
                 <Provider store={store}>
-                    <ProductDetails product={product} />
+                    <ProductDetails product={product.data} />
                 </Provider>
             </BrowserRouter>
         );
@@ -120,7 +120,7 @@ describe('подробное описание товара', () => {
         const { container } = render(application);
         const price = container.querySelector('.ProductDetails-Price');
 
-        expect(price.textContent).toContain(product.data.price);
+        expect(price.textContent).toBe(`$${product.data.price}`);
     });
 
     it("отображается цвет товара", async () => {
@@ -134,7 +134,7 @@ describe('подробное описание товара', () => {
         const application = (
             <BrowserRouter basename={basename}>
                 <Provider store={store}>
-                    <ProductDetails product={product} />
+                    <ProductDetails product={product.data} />
                 </Provider>
             </BrowserRouter>
         );
@@ -142,7 +142,7 @@ describe('подробное описание товара', () => {
         const { container } = render(application);
         const color = container.querySelector('.ProductDetails-Color');
 
-        expect(color.textContent).toContain(product.data.color);
+        expect(color.textContent).toBe(product.data.color);
     });
 
     it("отображается материал товара", async () => {
@@ -156,7 +156,7 @@ describe('подробное описание товара', () => {
         const application = (
             <BrowserRouter basename={basename}>
                 <Provider store={store}>
-                    <ProductDetails product={product} />
+                    <ProductDetails product={product.data} />
                 </Provider>
             </BrowserRouter>
         );
@@ -164,7 +164,7 @@ describe('подробное описание товара', () => {
         const { container } = render(application);
         const material = container.querySelector('.ProductDetails-Material');
 
-        expect(material.textContent).toContain(product.data.material);
+        expect(material.textContent).toBe(product.data.material);
     });
 
     it("отображается кнопка добавить в корзину", async () => {
@@ -178,7 +178,7 @@ describe('подробное описание товара', () => {
         const application = (
             <BrowserRouter basename={basename}>
                 <Provider store={store}>
-                    <ProductDetails product={product} />
+                    <ProductDetails product={product.data} />
                 </Provider>
             </BrowserRouter>
         );
