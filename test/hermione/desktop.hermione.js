@@ -1,51 +1,27 @@
 const { assert } = require('chai');
 
-describe('статичная отрисовка главной страницы', async function() {
-    it('desktop', async function() {
+describe('главная страница', async function() {
+    it('главная страница десктоп скриншот', async function() {
         await this.browser.url('/hw/store/');
-        await this.browser.assertView('plain', '.Application', {
-            compositeImage: true,
-        });
-    });
-
-    it('mobile', async function() {
-        await this.browser.setWindowSize(480, 920);
-        await this.browser.url('/hw/store/');
-        await this.browser.assertView('plain', '.Application', {
+        await this.browser.assertView('plain', '.Home', {
             compositeImage: true,
         });
     });
 });
 
-describe('статичная отрисовка страницы доставки', async function() {
-    it('desktop', async function() {
+describe('страница доставки', async function() {
+    it('страница доставки десктоп скриншот', async function() {
         await this.browser.url('/hw/store/delivery');
-        await this.browser.assertView('plain', '.Application', {
-            compositeImage: true,
-        });
-    });
-
-    it('mobile', async function() {
-        await this.browser.setWindowSize(480, 920);
-        await this.browser.url('/hw/store/delivery');
-        await this.browser.assertView('plain', '.Application', {
+        await this.browser.assertView('plain', '.Delivery', {
             compositeImage: true,
         });
     });
 });
 
-describe('статичная отрисовка страницы контакты', async function() {
-    it('desktop', async function() {
+describe('страница контакты', async function() {
+    it('страницы контакты десктоп скриншот', async function() {
         await this.browser.url('/hw/store/contacts');
-        await this.browser.assertView('plain', '.Application', {
-            compositeImage: true,
-        });
-    });
-
-    it('mobile', async function() {
-        await this.browser.setWindowSize(480, 920);
-        await this.browser.url('/hw/store/contacts');
-        await this.browser.assertView('plain', '.Application', {
+        await this.browser.assertView('plain', '.Contacts', {
             compositeImage: true,
         });
     });
@@ -61,7 +37,7 @@ describe('корзина', async function() {
         await this.browser.url('/hw/store/cart');
 
         // Reload page
-        await this.browser.url('https://google.ru/');
+        // await this.browser.url('https://google.ru/');
         await this.browser.url('/hw/store/cart');
 
         this.browser.waitUntil(async () => {
