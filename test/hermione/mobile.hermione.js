@@ -6,7 +6,6 @@ describe('гамбургер', async function() {
         await this.browser.setWindowSize(800, 800)
 
         const burger = await this.browser.$('.navbar-toggler');
-        await burger.waitForExist();
 
         assert.equal(await burger.isDisplayed(), false);
     });
@@ -15,7 +14,6 @@ describe('гамбургер', async function() {
         await this.browser.url('/hw/store/');
         await this.browser.setWindowSize(575, 800)
         const burger = await this.browser.$('.navbar-toggler');
-        await burger.waitForExist();
 
         assert.equal(await burger.isDisplayed(), true);
     });
