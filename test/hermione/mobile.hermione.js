@@ -21,9 +21,12 @@ describe('гамбургер', async function() {
         await this.browser.url('/hw/store/');
         await this.browser.setWindowSize(575, 800)
         const burger = await this.browser.$('.navbar-toggler');
+        await burger.waitForExist();
         await burger.click();
         const navBAr = await this.browser.$('.navbar-collapse');
+        await navBAr.waitForExist();
         const navLink = await this.browser.$('.nav-link');
+        await navLink.waitForExist();
         await navLink.click();
 
         assert.equal(await navBAr.isDisplayed(), false);
