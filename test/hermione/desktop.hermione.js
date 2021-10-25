@@ -40,10 +40,8 @@ describe('корзина', async function() {
         // await this.browser.url('https://google.ru/');
         await this.browser.url('/hw/store/cart');
 
-        this.browser.waitUntil(async () => {
-            await this.browser.assertView('plain', '.Cart', {
-                compositeImage: true,
-            });
-        }, 5000, 'waiting 5s');
+        await this.browser.assertView('plain', '.Cart', {
+            compositeImage: true,
+        });
     });
 });
