@@ -5,6 +5,8 @@ describe('главная страница', async function() {
         await this.browser.url('/hw/store/');
         await this.browser.assertView('plain', '.Home', {
             compositeImage: true,
+            allowViewportOverflow: true,
+            selectorToScroll: '.Application',
         });
     });
 });
@@ -14,6 +16,8 @@ describe('страница доставки', async function() {
         await this.browser.url('/hw/store/delivery');
         await this.browser.assertView('plain', '.Delivery', {
             compositeImage: true,
+            allowViewportOverflow: true,
+            selectorToScroll: '.Application',
         });
     });
 });
@@ -23,6 +27,8 @@ describe('страница контакты', async function() {
         await this.browser.url('/hw/store/contacts');
         await this.browser.assertView('plain', '.Contacts', {
             compositeImage: true,
+            allowViewportOverflow: true,
+            selectorToScroll: '.Application',
         });
     });
 });
@@ -42,6 +48,8 @@ describe('корзина', async function() {
 
         await this.browser.assertView('plain', '.Cart', {
             compositeImage: true,
+            allowViewportOverflow: true,
+            selectorToScroll: '.Application',
         });
     });
 });
