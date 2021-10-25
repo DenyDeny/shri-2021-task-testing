@@ -52,4 +52,27 @@ describe('корзина', async function() {
             selectorToScroll: '.Application',
         });
     });
+
+    it('очищается', async function() {
+        await this.browser.url('/hw/store/catalog/1');
+        await this.browser.$('.Product button').click();
+
+        await this.browser.url('/hw/store/cart');
+
+        await this.browser.$('.Cart-Clear').click();
+
+        assert.equal(await this.browser.$('.table').isDisplayed(), false);
+    });
+
+    it('сбрасывается счетчик', async function() {
+        const navbar = await this.browser.$('.navbar-nav');
+        await this.browser.url('/hw/store/catalog/1');
+        await this.browser.$('.Product button').click();
+
+        await this.browser.url('/hw/store/cart');
+
+        await this.browser.$('.Cart-Clear').click();
+
+        assert.equal(await navbar.$$('a')[3].getText(), 'Cart');
+    });
 });

@@ -12,7 +12,7 @@ describe('гамбургер', async function() {
 
     it('появляется при разрешении меньше 576px', async function() {
         await this.browser.url('/hw/store/');
-        await this.browser.setWindowSize(575, 800)
+        await this.browser.setWindowSize(500, 800)
         const burger = await this.browser.$('.navbar-toggler');
 
         assert.equal(await burger.isDisplayed(), true);
