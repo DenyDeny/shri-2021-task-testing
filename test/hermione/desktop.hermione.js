@@ -43,7 +43,6 @@ describe('корзина', async function() {
         await this.browser.url('/hw/store/cart');
 
         // Reload page
-        // await this.browser.url('https://google.ru/');
         await this.browser.url('/hw/store/cart');
 
         await this.browser.assertView('plain', '.Cart', {
@@ -52,27 +51,16 @@ describe('корзина', async function() {
             selectorToScroll: '.Application',
         });
     });
+});
 
-    it('очищается', async function() {
-        await this.browser.url('/hw/store/catalog/1');
-        await this.browser.$('.Product button').click();
 
-        await this.browser.url('/hw/store/cart');
-
-        await this.browser.$('.Cart-Clear').click();
-
-        assert.equal(await this.browser.$('.table').isDisplayed(), false);
-    });
-
-    it('сбрасывается счетчик', async function() {
+describe('панель навигации', async function() {
+    it('правильное отображение не повторяющихся айтемов в шапке', async function () {
         const navbar = await this.browser.$('.navbar-nav');
         await this.browser.url('/hw/store/catalog/1');
         await this.browser.$('.Product button').click();
-
-        await this.browser.url('/hw/store/cart');
-
-        await this.browser.$('.Cart-Clear').click();
-
-        assert.equal(await navbar.$$('a')[3].getText(), 'Cart');
+        await this.browser.$('.Product button').click();
+        await this.browser.$('.Product button').click();
+        assert.equal(await navbar.$$('a')[3].getText(), 'Cart (1)');
     });
-});
+})

@@ -9,6 +9,17 @@ import { Cart } from '../../src/client/pages/Cart'
 import { initStore, addToCart, clearCart } from '../../src/client/store';
 import { MockExampleApi, CartApi } from './mocks';
 
+function cartApplication(store) {
+    const basename = "/hw/store";
+    return (
+        <BrowserRouter basename={basename}>
+            <Provider store={store}>
+                <Cart />
+            </Provider>
+        </BrowserRouter>
+    )
+}
+
 describe('Корзина', () => {
     it("продукт добавляется в корзину", async () => {
         const basename = "/hw/store";
@@ -18,15 +29,9 @@ describe('Корзина', () => {
 
         const store = initStore(api, cart);
 
-        store.dispatch(addToCart(product.data))
+        store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         render(application);
 
@@ -50,13 +55,7 @@ describe('Корзина', () => {
         store.dispatch(addToCart(product.data));
         store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         render(application);
 
@@ -80,13 +79,7 @@ describe('Корзина', () => {
 
         store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         const { container } = render(application);
         const buttonSubmit = screen.getByRole('button', { name: /Clear shopping cart/i });
@@ -103,13 +96,7 @@ describe('Корзина', () => {
 
         const store = initStore(api, cart);
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         const { container } = render(application);
         const link = container.querySelector('a');
@@ -130,13 +117,7 @@ describe('Каждый товар в корзине имеет', () => {
 
         store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         const { container } = render(application);
         const table = container.querySelector('table');
@@ -155,13 +136,7 @@ describe('Каждый товар в корзине имеет', () => {
 
         store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         const { container } = render(application);
         const table = container.querySelector('table');
@@ -180,13 +155,7 @@ describe('Каждый товар в корзине имеет', () => {
 
         store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         const { container } = render(application);
         const table = container.querySelector('table');
@@ -205,99 +174,54 @@ describe('Каждый товар в корзине имеет', () => {
 
         store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Cart />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         const { container } = render(application);
         const table = container.querySelector('table');
         const total = table.querySelector('.Cart-Total').textContent.replace(/[^+\d]/g, '');
         expect(Number(total)).toBe(product.data.price);
     });
+});
 
-    it('правильное отображение не повторяющихся айтемов в шапке', async function () {
+describe('чекаут', () => {
+    it('есть возможность оформления', async () => {
         const basename = "/hw/store";
         const api = new MockExampleApi(basename);
         const cart = new CartApi();
 
+        const store = initStore(api, cart);
+
         const product = await api.getProductById(0);
+
+        store.dispatch(addToCart(product.data));
+
+        const application = cartApplication(store);
+
+        const { container } = render(application);
+        const isForm = !!container.querySelector('.Form');
+
+        expect(isForm).toBeTruthy();
+    });
+
+    it('пустая форма не сабмитится', async () => {
+        const basename = "/hw/store";
+        const api = new MockExampleApi(basename);
+        const cart = new CartApi();
 
         const store = initStore(api, cart);
 
-        store.dispatch(addToCart(product.data));
-        store.dispatch(addToCart(product.data));
+        const product = await api.getProductById(0);
+
         store.dispatch(addToCart(product.data));
 
-        const application = (
-            <BrowserRouter basename={basename}>
-                <Provider store={store}>
-                    <Application />
-                </Provider>
-            </BrowserRouter>
-        );
+        const application = cartApplication(store);
 
         const { container } = render(application);
-        const navLink = container.querySelector('.navbar-nav a[href="/hw/store/cart"]');
-        const countItems = Number(navLink.textContent.replace(/[^+\d]/g, ''));
-        expect(countItems).toBe(1);
+
+        const buttonSubmit = screen.getByRole('button', { name: /Checkout/i });
+
+        await events.click(buttonSubmit);
+
+        expect(!!container.querySelector('.Form .Form-Field.is-invalid')).toBeTruthy();
     });
 });
-
-// describe('чекаут', () => {
-//     it('есть возможность оформления', async () => {
-//         const basename = "/hw/store";
-//         const api = new MockExampleApi(basename);
-//         const cart = new CartApi();
-//
-//         const store = initStore(api, cart);
-//
-//         const product = await api.getProductById(0);
-//
-//         store.dispatch(addToCart(product.data));
-//
-//         const application = (
-//             <BrowserRouter basename={basename}>
-//                 <Provider store={store}>
-//                     <Cart />
-//                 </Provider>
-//             </BrowserRouter>
-//         );
-//
-//         const { container } = render(application);
-//         const isForm = !!container.querySelector('.Form');
-//
-//         expect(isForm).toBeTruthy();
-//     });
-//
-//     it('пустая форма не сабмитится', async () => {
-//         const basename = "/hw/store";
-//         const api = new MockExampleApi(basename);
-//         const cart = new CartApi();
-//
-//         const store = initStore(api, cart);
-//
-//         const product = await api.getProductById(0);
-//
-//         store.dispatch(addToCart(product.data));
-//
-//         const application = (
-//             <BrowserRouter basename={basename}>
-//                 <Provider store={store}>
-//                     <Cart />
-//                 </Provider>
-//             </BrowserRouter>
-//         );
-//
-//         const { container } = render(application);
-//
-//         const buttonSubmit = screen.getByRole('button', { name: /Checkout/i });
-//
-//         await events.click(buttonSubmit);
-//
-//         expect(!!container.querySelector('.Form .Form-Field.is-invalid')).toBeTruthy();
-//     });
-// });
